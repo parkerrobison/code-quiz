@@ -12,23 +12,56 @@ header div {
 
 header div a {
     text-decoration: none;
-    color: purple;
+    color: rgba(53, 28, 117, 1);
+    font-weight: bold;
 }
 
-main div {
-    text-align: center;
+.container {
+    
     margin: 5px auto;
     width: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    flex-wrap: wrap;
+    
+    
+    
 }
 #main-text {
     font-weight: bold;
     font-size: 38px;
 }
 
+.button-list {
+    flex-direction: column;
+    display:flex;
+}
+
+.button-list .btn {
+    width: 30%;
+    text-align: left;
+    font-size: large;
+    margin:5px;
+    padding: 5px;
+}
+
 .btn {
-    background-color: purple;
+    background-color:rgba(53, 28, 117, 1);
     color: white;
     border: none;
     border-radius: 5px;
+}
 
+.btn:hover {
+    background-color: rgba(138, 107, 224, 1);
+}
+
+#start-btn {
+    padding: 7px 10px;
+    font-size: 16px;
+}
+
+.hide {
+    display:none;
 }
