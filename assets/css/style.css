@@ -2,14 +2,9 @@ header {
     margin: 20px 0;
 
 }
-
-.high-score {
-    float: left;
-}
 .timer {
     float: right;
 }
-
 main {
     text-align: center;
     margin: 5px auto;
