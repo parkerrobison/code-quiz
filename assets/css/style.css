@@ -4,12 +4,31 @@
 }
 header div {
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    margin: 20px 0;
+    margin: 20px;
+    padding: 0 10px;
+}
 
+header div a {
+    text-decoration: none;
+    color: purple;
 }
 
 main div {
     text-align: center;
     margin: 5px auto;
+    width: 80%;
+}
+#main-text {
+    font-weight: bold;
+    font-size: 38px;
+}
+
+.btn {
+    background-color: purple;
+    color: white;
+    border: none;
+    border-radius: 5px;
+
 }

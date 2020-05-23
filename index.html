@@ -16,13 +16,26 @@
         </header>
 
         <main>
-            <div>
-            <h1 class="title">Code Quiz Challenge</h1>
-            <p class="intro">This quiz is designed to test your knowledge about coding. Try to answer these questions correctly within the set time limit. 
-                Remember, each incorrect response will reduce your time/score by 10. Good Luck!
-            </p>
-            <button type="submit" class="start-button">Start</button>
-        </div>
+            <div class= "container">
+                <div id="q-container">
+                    <div id= "main-text">Code Quiz Challenge</div>
+                    <div id= "sub-text">This quiz is designed to test your knowledge about coding. Try to answer these questions correctly within the set time limit. 
+                        Remember, each incorrect response will reduce your time/score by 10. Good Luck!
+                    </div>
+                        <!--<p class="intro">This quiz is designed to test your knowledge about coding. Try to answer these questions correctly within the set time limit. 
+                            Remember, each incorrect response will reduce your time/score by 10. Good Luck!
+                        </p> -->
+                    <div class= "button-list" id= "answer-buttons">
+                        <button class= "btn">1</button>
+                        <button class= "btn">2</button>
+                        <button class= "btn">3</button>
+                        <button class= "btn">4</button>
+                    </div>
+                    <div class= "control-button">
+                        <button class="start-button btn" id="start-btn">Start</button>
+                    </div>
+                </div>
+            </div>
         </main>
 
         <script src="./assets/js/script.js"></script>
