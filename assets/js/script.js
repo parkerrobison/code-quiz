@@ -59,6 +59,7 @@ var time = questions.length * 15
 
 // start screen
 
+// starts the quiz
 function startQuiz() {
     startButtonEl.classList.add("hide");
     subTextEl.classList.add("hide");
@@ -72,14 +73,16 @@ function startQuiz() {
 function countdownStart() {
     time--;
     countdownTimerEl.textContent = "Time: " + time + " seconds remaining";
-    if (time === -1) {
+    if (time === 0 || time <= 0) {
         clearInterval(setIntervalId);
-        quizEnd()
+        window.alert("You didn't finish in time. Try again.");
+        homePage();
+        
     }
     
 
 }
-
+// this checks the selected choice to see if it is correct. 
 function choiceCheck() {
     for (i = 0; i < btnOptionsEl.length; i++) {
         (function (i) {
@@ -119,7 +122,7 @@ function displayQuestion() {
 
 // deducts time and displays a new question and answer.
 function wrongChoice() {
-    time = time - 10;
+    time = time - 15;
     //display new question
     displayQuestion();
 
@@ -127,10 +130,21 @@ function wrongChoice() {
 
 // end screen
 function quizEnd() {
+
 // display end screen that contains an input for initials, a message, thier score. 
 // submit button to store intials and score to storage. 
 // hide answer buttons
 //stop timer
+}
+
+// this refreshes the webpage to display the first screen. The maintext line was interacting strangely when you re-started the quiz.
+function homePage() {
+    location.reload();
+    // document.getElementById("main-text").textContent = "Code Quiz Challenge";
+    // answerButtonsEl.classList.add("hide");
+    // startButtonEl.classList.remove("hide");
+    // subTextEl.classList.remove("hide");
+    // countdownTimerEl.textContent = "Time: 0";
 }
 
 // start screen function
