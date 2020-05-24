@@ -4,6 +4,7 @@ var mainTextEl = document.querySelector("#main-text");
 var subTextEl = document.querySelector("#sub-text");
 var countdownTimerEl = document.querySelector("#timer");
 var answerButtonsEl = document.querySelector("#answer-buttons");
+var btnOptionEl = document.getElementsByClassName("btn-option");
 var setIntervalId;
 var i =0;
 
@@ -21,11 +22,23 @@ var questions = [
         {text:"3. <scripting>", correct: false},
         {text:"4. <js>", correct: false}
     ]},
-    {q: "What is the purpose of the <body> element?", a: [
+    {q: "What is the purpose of the 'body' element?", a: [
         {text: "1. The body element connects to the head element.", correct: false},
         {text: "2. The body contains all of the content of webpage.", correct: true},
         {text: "3. The body element will remain an empty placeholder.", correct: false},
         {text: "4. The body element is where all of the metadata is stored.", correct: false}
+    ]},
+    {q: "Which CSS property allows the parent element to display its CSS properties by stretching its dimensions to physically contain its child elements?", a: [
+        {text: "1. text-align: center;", correct: false},
+        {text: "2. overflow: auto;", correct: false},
+        {text: "3. margin: auto;", correct: false},
+        {text: "4. display: inline-block", correct: true}
+    ]},
+    {q: "Which one of these is NOT a valid media type for media queries?", a: [
+        {text: "1. all", correct: false},
+        {text: "2. screen", correct: false},
+        {text: "3. speech", correct: false},
+        {text: "4. tablet", correct: true}
     ]},
 ]
 
@@ -38,7 +51,6 @@ function startQuiz() {
 startButtonEl.classList.add("hide");
 subTextEl.classList.add("hide");
 setIntervalId = setInterval(countdownStart, 1000);
-
 answerButtonsEl.classList.remove("hide");
 displayQuestion()
 }
@@ -46,27 +58,33 @@ displayQuestion()
 
 function countdownStart(){
     time--;
-    countdownTimerEl.textContent= time;
+    countdownTimerEl.textContent= "Time: " + time + " seconds remaining";
     if (time === 0) {
         clearInterval(setIntervalId);
+        quizEnd()
     }
-    //case 1 - idle //30%15===0 i++
-    //case 2 - correct - i++ no penalty
-    //case 3 - incorrect -i++ substract 10
+    //case 1 - correct - i++ no penalty
+    //case 2 - incorrect -i++ substract 10
     
 }
 
 //update i and include a loop
 function displayQuestion() {
-    document.getElementById("main-text").innerHTML = questions[i].q;
+    for (i = 0; i < questions.length; i++) {
+    document.getElementById("main-text").textContent = questions[i].q;
     var answers = questions[i].a;
    
-    document.getElementById("btn1").innerHTML = answers[0].text;
-    document.getElementById("btn2").innerHTML = answers[1].text;
-    document.getElementById("btn3").innerHTML = answers[2].text;
-    document.getElementById("btn4").innerHTML = answers[3].text;
+    document.getElementById("btn1").textContent = answers[0].text;
+    document.getElementById("btn2").textContent = answers[1].text;
+    document.getElementById("btn3").textContent = answers[2].text;
+    document.getElementById("btn4").textContent = answers[3].text;
+    break;
+    }
     
-    
+}
+
+function choiceCheck(){
+    console.log("You made a choice!")
 }
 
 // end screen
@@ -76,11 +94,11 @@ function quizEnd() {
 
 //startButtonEl.classList.remove("hide");
 
-startButtonEl.addEventListener('click', startQuiz)
+startButtonEl.addEventListener('click', startQuiz);
 
-// GIVEN I am taking a code quiz
-// WHEN I click the start button
-// THEN a timer starts and I am presented with a question
+btnOptionEl.addEventListener('click', choiceCheck);
+
+
 // WHEN I answer a question
 // THEN I am presented with another question
 // WHEN I answer a question incorrectly
