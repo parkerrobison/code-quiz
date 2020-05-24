@@ -40,6 +40,7 @@ subTextEl.classList.add("hide");
 setIntervalId = setInterval(countdownStart, 1000);
 
 answerButtonsEl.classList.remove("hide");
+displayQuestion()
 }
 // questions screen
 
@@ -52,11 +53,20 @@ function countdownStart(){
     //case 1 - idle //30%15===0 i++
     //case 2 - correct - i++ no penalty
     //case 3 - incorrect -i++ substract 10
-    displayQuestion()
+    
 }
 
+//update i and include a loop
 function displayQuestion() {
-    document.getElementById("main-text").innerHTML = questions[q[i]];
+    document.getElementById("main-text").innerHTML = questions[i].q;
+    var answers = questions[i].a;
+   
+    document.getElementById("btn1").innerHTML = answers[0].text;
+    document.getElementById("btn2").innerHTML = answers[1].text;
+    document.getElementById("btn3").innerHTML = answers[2].text;
+    document.getElementById("btn4").innerHTML = answers[3].text;
+    
+    
 }
 
 // end screen
