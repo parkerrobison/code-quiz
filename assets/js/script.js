@@ -5,6 +5,10 @@ var subTextEl = document.querySelector("#sub-text");
 var countdownTimerEl = document.querySelector("#timer");
 var answerButtonsEl = document.querySelector("#answer-buttons");
 
+var submitBtnEl = document.createElement('button');
+var scoreTextEl = document.createElement('p');
+var initialInputEl = document.createElement('input');
+
 var btnOptionsEl = document.getElementsByClassName('btn-option');
 var setIntervalId;
 var i = 0;
@@ -56,6 +60,8 @@ var questions = [
 
 
 var time = questions.length * 15
+var score = 0;
+var highscore= [];
 
 // start screen
 
@@ -95,7 +101,7 @@ function choiceCheck() {
                     displayQuestion();
 
                 } else {
-                    window.alert("That is incorrect 10 seconds will be deducted from your time.");
+                    window.alert("That is incorrect 15 seconds will be deducted from your time.");
                     questionIndex++
                     wrongChoice();
                 }
@@ -115,6 +121,7 @@ function displayQuestion() {
         document.getElementById("btn4").textContent = answers[3].text;
     }
     else {
+        clearInterval(setIntervalId);
         quizEnd();
     }
 
@@ -130,12 +137,28 @@ function wrongChoice() {
 
 // end screen
 function quizEnd() {
+    score = setIntervalId;
+    countdownTimerEl.classList.add("hide");
+    document.getElementById("main-text").textContent = "Save your high score!";
+    
+    
+    submitBtnEl.textContent = "Submit";
+    submitBtnEl.setAttribute("class", "btn");
+    scoreTextEl.textContent = "Your score is " + score + "! Enter your initials:";
+    qContainerEl.appendChild(scoreTextEl);
+    qContainerEl.appendChild(initialInputEl);
+    qContainerEl.appendChild(submitBtnEl);
+    answerButtonsEl.classList.add("hide");
 
-// display end screen that contains an input for initials, a message, thier score. 
-// submit button to store intials and score to storage. 
-// hide answer buttons
-//stop timer
+    // submit button to store intials and score to storage. 
 }
+
+
+
+// function savedScore() {
+//     highscore.push(highscoreData);
+//     localStorage.setItem()
+// }
 
 // this refreshes the webpage to display the first screen. The maintext line was interacting strangely when you re-started the quiz.
 function homePage() {
@@ -147,8 +170,6 @@ function homePage() {
     // countdownTimerEl.textContent = "Time: 0";
 }
 
-// start screen function
-// that displays the default info. 
 
 // highscore screen
 // two buttons. one to return to homepage. one to clear storage.
@@ -158,6 +179,18 @@ function homePage() {
 //startButtonEl.classList.remove("hide");
 
 startButtonEl.addEventListener('click', startQuiz);
+
+submitBtnEl.addEventListener('click', function() {
+    var initials = initialInputEl.value;
+    var highscoreData = setIntervalId;
+    if (initials === "") {
+        window.alert("Please enter your initials.")
+    }
+    else {
+        localStorage.setItem("initials", initials);
+        localStorage.setItem("highscore", highscoreData);
+    }
+});
 
 
 
