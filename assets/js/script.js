@@ -9,8 +9,12 @@ var submitBtnEl = document.createElement('button');
 var scoreTextEl = document.createElement('p');
 var initialInputEl = document.createElement('input');
 
+var highscoreDisplayEl = document.querySelector('#high-score');
+var goBackBtnEl = document.createElement('button');
+var clearDataBtnEl = document.createElement('button');
+
 var btnOptionsEl = document.getElementsByClassName('btn-option');
-var setIntervalId;
+var timerInterval;
 var i = 0;
 var questionIndex = 0;
 
@@ -62,8 +66,7 @@ var questions = [
 var time = questions.length * 15
 var score = 0;
 var highscore = [];
-var highscoreDisplayEl = document.querySelector("#high-score");
-var clearDataEl = document.querySelector("#clearHS");
+
 
 // start screen
 
@@ -71,7 +74,7 @@ var clearDataEl = document.querySelector("#clearHS");
 function startQuiz() {
     startButtonEl.classList.add("hide");
     subTextEl.classList.add("hide");
-    setIntervalId = setInterval(countdownStart, 1000);
+    timerInterval = setInterval(countdownStart, 1000);
     answerButtonsEl.classList.remove("hide");
     choiceCheck();
     displayQuestion();
@@ -82,7 +85,7 @@ function countdownStart() {
     time--;
     countdownTimerEl.textContent = "Time: " + time + " seconds remaining";
     if (time === 0 || time <= 0) {
-        clearInterval(setIntervalId);
+        clearInterval(timerInterval);
         window.alert("You didn't finish in time. Try again.");
         homePage();
 
@@ -123,7 +126,7 @@ function displayQuestion() {
         document.getElementById("btn4").textContent = answers[3].text;
     }
     else {
-        clearInterval(setIntervalId);
+        clearInterval(timerInterval);
         quizEnd();
     }
 
@@ -139,11 +142,9 @@ function wrongChoice() {
 
 // end screen
 function quizEnd() {
-    score = setIntervalId;
+    score = time;
     countdownTimerEl.classList.add("hide");
     document.getElementById("main-text").textContent = "Save your high score!";
-
-
     submitBtnEl.textContent = "Submit";
     submitBtnEl.setAttribute("class", "btn");
     scoreTextEl.textContent = "Your score is " + score + "! Enter your initials:";
@@ -151,8 +152,6 @@ function quizEnd() {
     qContainerEl.appendChild(initialInputEl);
     qContainerEl.appendChild(submitBtnEl);
     answerButtonsEl.classList.add("hide");
-
-    // submit button to store intials and score to storage. 
 }
 
 
@@ -160,19 +159,30 @@ startButtonEl.addEventListener('click', startQuiz);
 
 submitBtnEl.addEventListener('click', function () {
     var initials = initialInputEl.value;
-    var highscoreData = setIntervalId;
+    var highscoreData = time;
     if (initials === "") {
         window.alert("Please enter your initials.")
     }
     else {
         localStorage.setItem("initials", initials);
         localStorage.setItem("highscoreData", highscoreData);
-        savedScore();
+        scorePage();
     }
 });
 
+function scorePage() {
+    document.getElementById("main-text").textContent = "High Score";
+    submitBtnEl.classList.add("hide");
+    scoreTextEl.classList.add("hide");
+    initialInputEl.classList.add("hide");
+    goBackBtnEl.textContent = "Go Back";
+    clearDataBtnEl.textContent = "Clear Data";
+    highscoreDisplayEl.classList.remove("hide");
+    goBackBtnEl.setAttribute("class", "btn");
+    clearDataBtnEl.setAttribute("class", "btn");
+    qContainerEl.appendChild(goBackBtnEl);
+    qContainerEl.appendChild(clearDataBtnEl);
 
-function savedScore() {
     var initials = localStorage.getItem("initials")
     var highscoreData = localStorage.getItem("highscoreData")
     if (initials && highscoreData === null) {
@@ -182,8 +192,10 @@ function savedScore() {
     highscoreDisplayEl.textContent = initials, highscoreData;
 }
 
+goBackBtnEl.addEventListener('click', homePage);
+
 function clearData() {
-    clearDataEl.addEventListener('click', function () {
+    clearDataBtnEl.addEventListener('click', function() {
         localStorage.clear();
     });
 }
@@ -197,20 +209,3 @@ function homePage() {
     // subTextEl.classList.remove("hide");
     // countdownTimerEl.textContent = "Time: 0";
 }
-
-
-// highscore screen
-// two buttons. one to return to homepage. one to clear storage.
-// displays the highscore
-
-
-//startButtonEl.classList.remove("hide");
-
-
-
-
-
-// WHEN all questions are answered or the timer reaches 0
-// THEN the game is over
-// WHEN the game is over
-// THEN I can save my initials and score
