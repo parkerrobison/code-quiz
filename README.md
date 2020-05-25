@@ -20,7 +20,7 @@ The user will have a set amount of time to anser the questions that will be pres
 https://parkerrobison.github.io/code-quiz/
  
 ## Preview of the application
- ![](images/password-generator-preview.JPG)
- ![](images/password-generator-preview.JPG)
+ ![](images/quiz-preview.JPG)
+ ![](images/quiz-question-preview.JPG
 ## Contribution
 Made by Parker Robison
