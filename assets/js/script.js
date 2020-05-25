@@ -61,7 +61,9 @@ var questions = [
 
 var time = questions.length * 15
 var score = 0;
-var highscore= [];
+var highscore = [];
+var highscoreDisplayEl = document.querySelector("#high-score");
+var clearDataEl = document.querySelector("#clearHS");
 
 // start screen
 
@@ -83,9 +85,9 @@ function countdownStart() {
         clearInterval(setIntervalId);
         window.alert("You didn't finish in time. Try again.");
         homePage();
-        
+
     }
-    
+
 
 }
 // this checks the selected choice to see if it is correct. 
@@ -140,8 +142,8 @@ function quizEnd() {
     score = setIntervalId;
     countdownTimerEl.classList.add("hide");
     document.getElementById("main-text").textContent = "Save your high score!";
-    
-    
+
+
     submitBtnEl.textContent = "Submit";
     submitBtnEl.setAttribute("class", "btn");
     scoreTextEl.textContent = "Your score is " + score + "! Enter your initials:";
@@ -154,11 +156,37 @@ function quizEnd() {
 }
 
 
+startButtonEl.addEventListener('click', startQuiz);
 
-// function savedScore() {
-//     highscore.push(highscoreData);
-//     localStorage.setItem()
-// }
+submitBtnEl.addEventListener('click', function () {
+    var initials = initialInputEl.value;
+    var highscoreData = setIntervalId;
+    if (initials === "") {
+        window.alert("Please enter your initials.")
+    }
+    else {
+        localStorage.setItem("initials", initials);
+        localStorage.setItem("highscoreData", highscoreData);
+        savedScore();
+    }
+});
+
+
+function savedScore() {
+    var initials = localStorage.getItem("initials")
+    var highscoreData = localStorage.getItem("highscoreData")
+    if (initials && highscoreData === null) {
+        return;
+    }
+
+    highscoreDisplayEl.textContent = initials, highscoreData;
+}
+
+function clearData() {
+    clearDataEl.addEventListener('click', function () {
+        localStorage.clear();
+    });
+}
 
 // this refreshes the webpage to display the first screen. The maintext line was interacting strangely when you re-started the quiz.
 function homePage() {
@@ -178,19 +206,7 @@ function homePage() {
 
 //startButtonEl.classList.remove("hide");
 
-startButtonEl.addEventListener('click', startQuiz);
 
-submitBtnEl.addEventListener('click', function() {
-    var initials = initialInputEl.value;
-    var highscoreData = setIntervalId;
-    if (initials === "") {
-        window.alert("Please enter your initials.")
-    }
-    else {
-        localStorage.setItem("initials", initials);
-        localStorage.setItem("highscore", highscoreData);
-    }
-});
 
 
 
