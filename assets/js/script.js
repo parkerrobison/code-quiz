@@ -1,22 +1,24 @@
+// elements selected from HTML
 var qContainerEl = document.querySelector("#q-container");
 var startButtonEl = document.querySelector("#start-btn");
 var mainTextEl = document.querySelector("#main-text");
 var subTextEl = document.querySelector("#sub-text");
 var countdownTimerEl = document.querySelector("#timer");
 var answerButtonsEl = document.querySelector("#answer-buttons");
+var highscoreDisplayEl = document.querySelector('#high-score');
 
+// elements created in js file
 var submitBtnEl = document.createElement('button');
 var scoreTextEl = document.createElement('p');
 var initialInputEl = document.createElement('input');
-
-var highscoreDisplayEl = document.querySelector('#high-score');
 var goBackBtnEl = document.createElement('button');
-var clearDataBtnEl = document.createElement('button');
+//var clearDataBtnEl = document.createElement('button');
 
 var btnOptionsEl = document.getElementsByClassName('btn-option');
 var timerInterval;
 var i = 0;
 var questionIndex = 0;
+var hsarray = JSON.parse(localStorage.getItem('highscores')) || [] ;
 
 var questions = [
     {
@@ -67,9 +69,6 @@ var time = questions.length * 15
 var score = 0;
 var highscore = [];
 
-
-// start screen
-
 // starts the quiz
 function startQuiz() {
     startButtonEl.classList.add("hide");
@@ -88,7 +87,6 @@ function countdownStart() {
         clearInterval(timerInterval);
         window.alert("You didn't finish in time. Try again.");
         homePage();
-
     }
 
 
@@ -154,7 +152,6 @@ function quizEnd() {
     answerButtonsEl.classList.add("hide");
 }
 
-
 startButtonEl.addEventListener('click', startQuiz);
 
 submitBtnEl.addEventListener('click', function () {
@@ -164,48 +161,46 @@ submitBtnEl.addEventListener('click', function () {
         window.alert("Please enter your initials.")
     }
     else {
-        localStorage.setItem("initials", initials);
-        localStorage.setItem("highscoreData", highscoreData);
+        var newHighScore = [initials, highscoreData];
+        hsarray.push(newHighScore);
+        localStorage.setItem('highscores', JSON.stringify(hsarray));
         scorePage();
     }
 });
-
+// this page displays the high score
 function scorePage() {
     document.getElementById("main-text").textContent = "High Score";
     submitBtnEl.classList.add("hide");
     scoreTextEl.classList.add("hide");
     initialInputEl.classList.add("hide");
     goBackBtnEl.textContent = "Go Back";
-    clearDataBtnEl.textContent = "Clear Data";
+    //clearDataBtnEl.textContent = "Clear Data";
     highscoreDisplayEl.classList.remove("hide");
     goBackBtnEl.setAttribute("class", "btn");
-    clearDataBtnEl.setAttribute("class", "btn");
+    //clearDataBtnEl.setAttribute("class", "btn");
     qContainerEl.appendChild(goBackBtnEl);
-    qContainerEl.appendChild(clearDataBtnEl);
+    //qContainerEl.appendChild(clearDataBtnEl);
 
-    var initials = localStorage.getItem("initials")
-    var highscoreData = localStorage.getItem("highscoreData")
-    if (initials && highscoreData === null) {
+    
+    if (hsarray.length === 0) {
         return;
     }
-
-    highscoreDisplayEl.textContent = initials, highscoreData;
+    for (var h = 0; h < hsarray.length; h++) {
+        var currentHighScore = hsarray[h];
+        highscoreDisplayEl.value += currentHighScore[0] + '-' + currentHighScore[1];
+    }
 }
 
 goBackBtnEl.addEventListener('click', homePage);
 
-function clearData() {
-    clearDataBtnEl.addEventListener('click', function() {
-        localStorage.clear();
-    });
-}
 
-// this refreshes the webpage to display the first screen. The maintext line was interacting strangely when you re-started the quiz.
+//clearDataBtnEl.addEventListener('click', clearData);
+// function clearData() {
+//     console.log("clicked");
+//     localStorage.clear();
+// }
+
+
 function homePage() {
     location.reload();
-    // document.getElementById("main-text").textContent = "Code Quiz Challenge";
-    // answerButtonsEl.classList.add("hide");
-    // startButtonEl.classList.remove("hide");
-    // subTextEl.classList.remove("hide");
-    // countdownTimerEl.textContent = "Time: 0";
 }

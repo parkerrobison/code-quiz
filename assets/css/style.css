@@ -10,7 +10,7 @@ header div {
     padding: 0 10px;
 }
 
-header div a {
+header div p {
     text-decoration: none;
     color: rgba(53, 28, 117, 1);
     font-weight: bold;
